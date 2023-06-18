@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { IMG_PREFIX } from '../utils/config';
 import { GenderEnum, NationEnum, Skill } from '../utils/domain';
 

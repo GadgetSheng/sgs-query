@@ -24,7 +24,7 @@ function App() {
       setHeros(results);
     });
   }, [query]);
-  const onQueryChange = useCallback((e) => setQuery(e.target?.value), []);
+  const onQueryChange = useCallback((e: any) => setQuery(e.target?.value), []);
   return (
     <div className="w-screen h-screen">
       <h1>SGS-QUERY</h1>
@@ -34,7 +34,7 @@ function App() {
         {fetching ? "fetching..." : JSON.stringify(data)}
       </div>
       武将名称/拼音
-      <input type="text" value={query} onChange={onQueryChange} placeholder='至少两字符'/>
+      <input type="text" value={query} onChange={onQueryChange} placeholder='至少两字符' />
       <button onClick={onQuery}>查询</button>
       <hr />
       <CardList heros={heros} />

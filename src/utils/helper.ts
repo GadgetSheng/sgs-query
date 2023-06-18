@@ -1,4 +1,3 @@
-import { FILE_PREFIX } from "./config";
 import { Hero, Skill } from "./domain";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
