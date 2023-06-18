@@ -38,23 +38,20 @@ async function resetData() {
     localforage.clear();
 }
 
-async function queryCard(where: string) {
-    let result = null;
+async function queryCards(where: string) {
+    const result: any = [];
     for (const fileName of GIT_FILE_LIST) {
-        console.log(fileName, where);
+        // console.log(fileName, where);
         const heros: any = await localforage.getItem(fileName);
         if (heros && heros.length) {
-            if (fileName === 'xinghuoliaoyuan') {
-                console.log(heros);
-            }
             const hero = heros.find((hero: any) => {
                 return hero.key.indexOf(where) >= 0
                     || (hero.name && hero.name.indexOf(where) >= 0)
             });
             if (hero) {
-                result = hero;
-                result.from = fileName;
-                break;
+                const data = { from: fileName, ...hero };
+                result.push(data);
+                // break;
             }
         }
     }
@@ -62,4 +59,4 @@ async function queryCard(where: string) {
     return result;
 }
 
-export { initData, resetData, queryCard }
+export { initData, resetData, queryCards }
