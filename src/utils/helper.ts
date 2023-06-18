@@ -14,11 +14,13 @@ function regexMatch(key: string, text: string, type = 1) {
         if (match && match[1]) {
             const origin = match[1];
             let regular = origin.replaceAll(/\/\/\S*/g, '').trim();
-            if (key === 'sp' && type === 1) console.log('===>match\r\n', regular);
+            if (key === 'sp' && type === 2) console.log('===>match\r\n', regular);
             if (regular.endsWith(',')) regular = regular.slice(0, -1);
             eval(`window.__JSON_${name}={${regular}}`);
             // @ts-expect-error __JSON
             result = window[`__JSON_${name}`];
+            // @ts-expect-error __JSON
+            window[`__JSON_${name}`] = null;
         } else {
             console.log('===>not-match', key, type)
         }
