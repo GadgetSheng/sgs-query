@@ -21,6 +21,7 @@ export interface Hero {
     gender: keyof typeof GenderEnum;
     name?: string;
     nation: keyof typeof NationEnum;
-    hp: number;
+    hp: number | string;
     skills?: Array<Skill>;
+    from?: string;
 }

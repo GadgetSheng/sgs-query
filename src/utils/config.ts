@@ -2,11 +2,11 @@ export const GIT_FILE_LIST: string[] = [
     // 'clan', // 士族
     // 'mobile', // 移动
     // 'sb', // 谋攻s
-    // 'old', // 旧版`
     'shenhua', // 神话再临
+    'old', // 旧版`
+    'standard',
     'sp', // SP
     'sp2', // SP2
-    'standard',
     'xinghuoliaoyuan', // 星火燎原
     'yijiang', // 一将成名
     'yingbian', // 应变

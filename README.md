@@ -45,3 +45,7 @@ re_zhangliao:'界张辽',
 TODO
 translate优先缓存
 后续匹配技能
+
+### REFRERNCE
+
+https://useworker.js.org/docs/api-useworker

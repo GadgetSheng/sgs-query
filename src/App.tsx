@@ -1,15 +1,16 @@
 import { useCallback, useState } from 'react'
-import { initData, resetData, queryCards } from './utils/fetcher';
+import { initData, resetData, queryCards, initFile } from './utils/fetcher';
 import CardList from './components/CardList';
+import { FILE_PREFIX, GIT_FILE_LIST } from './utils/config';
 
 function App() {
   const [fetching, setFetching] = useState(false)
   const [data, setData] = useState({});
   const [heros, setHeros] = useState<any>(null);
   const [query, setQuery] = useState('');
-  const onInitData = useCallback(async () => {
+  const onInitFile = useCallback(async (fileName: string) => {
     setFetching(true);
-    const result = await initData();
+    const result = await initFile(fileName);
     setData(result);
     setFetching(false);
   }, []);
@@ -25,10 +26,15 @@ function App() {
     });
   }, [query]);
   const onQueryChange = useCallback((e: any) => setQuery(e.target?.value), []);
+  const renderInitButtons = () => GIT_FILE_LIST.map((fileName: string, i: number) => (
+    <button key={i} onClick={() => onInitFile(fileName)}>init [{fileName}]</button>
+  ));
+
   return (
     <div className="w-screen h-screen">
       <h1>SGS-QUERY</h1>
-      <button onClick={onInitData}>初始化读取数据</button>
+      {renderInitButtons()}
+      <hr />
       <button onClick={onClearAll}>清空数据库</button>
       <div>
         {fetching ? "fetching..." : JSON.stringify(data)}

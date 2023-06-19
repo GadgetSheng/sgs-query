@@ -1,6 +1,6 @@
-import { FILE_PREFIX, GIT_FILE_LIST } from "./config";
 import localforage from 'localforage';
-import { resolveHeros } from "./helper";
+import { FILE_PREFIX, GIT_FILE_LIST } from "./config";
+import { regexMatch, resolveHeros, simpleRegexMatch } from "./helper";
 
 localforage.config({
     driver: [localforage.INDEXEDDB, localforage.WEBSQL],
@@ -9,24 +9,37 @@ localforage.config({
 
 
 async function fetch1file(fileName: string) {
-    const cache: any = await localforage.getItem(fileName);
+    const key = `dict_${fileName}`;
+    const cache: any = await localforage.getItem(key);
     if (cache && cache.length) {
-        console.log('file already cached', fileName);
+        console.log('dict already cached', fileName);
         return cache.length;
     }
     const url = FILE_PREFIX + fileName + '.js';
     const text: string = await fetch(url).then(resp => resp.text());
-    const heros = await resolveHeros(fileName, text);
-    // console.log('heros', heros);
-    localforage.setItem(fileName, heros);
-    return heros.length;
+    localStorage.setItem(fileName, text);
+    const translateMap = regexMatch(fileName, text, 2);
+    await localforage.setItem(key, translateMap);
+    const heroMap = regexMatch(fileName, text);
+    return [fileName, heroMap];
 }
+
+
 
 
 async function initData() {
     const promiseList = GIT_FILE_LIST.map((name) => fetch1file(name));
     try {
-        const counts = await Promise.all(promiseList);
+        const heroMaps = await Promise.all(promiseList);
+        console.log(heroMaps.length);
+        const counts: number[] = [];
+        for (let i = 0; i < heroMaps.length; i++) {
+            const [fileName, heroMap] = heroMaps[i];
+            const heros = await resolveHeros(fileName, heroMap);
+            // console.log('heros', heros);
+            await localforage.setItem(fileName, heros);
+            counts[i] = heros.length;
+        }
         return counts;
     } catch (error) {
         console.log('promise.all', error);
@@ -34,8 +47,33 @@ async function initData() {
     }
 }
 
+async function initFile(fileName: string) {
+    const key = `dict_${fileName}`;
+    try {
+        let text: string = localStorage.getItem(fileName) || '';
+        if (text && text.length) {
+            console.log('text already cached', fileName);
+        } else {
+            const url = FILE_PREFIX + fileName + '.js';
+            text = await fetch(url).then(resp => resp.text());
+        }
+        localStorage.setItem(fileName, text);
+        const translateMap = simpleRegexMatch(fileName, text);
+        await localforage.setItem(key, translateMap);
+        console.log('store [%s] ok', fileName);
+        // const heroMap = regexMatch(fileName, text);
+        // const heros = await resolveHeros(fileName, heroMap);
+        // await localforage.setItem(fileName, heros);
+        return 'done';
+    } catch (error) {
+        console.warn('error', error);
+        return 'error';
+    }
+}
+
 async function resetData() {
     localforage.clear();
+    // localStorage.clear();
 }
 
 async function queryCards(where: string) {
@@ -59,4 +97,4 @@ async function queryCards(where: string) {
     return result;
 }
 
-export { initData, resetData, queryCards }
+export { initData, initFile, resetData, queryCards }
