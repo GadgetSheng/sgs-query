@@ -9,8 +9,8 @@ export const GIT_FILE_LIST: string[] = [
     'sp2', // SP2
     'xinghuoliaoyuan', // 星火燎原
     'yijiang', // 一将成名
-    'yingbian', // 应变
     'refresh', // 重置
+    'yingbian', // 应变
 ];
 
 export const FILE_PREFIX = 'https://raw.githubusercontent.com/RainEggplant/noname/pwa/character/';

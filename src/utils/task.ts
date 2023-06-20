@@ -9,18 +9,21 @@ const buildKey=(type:string,key:string)=>{
 
 export async function saveFileContext(fileName:string){
     try {
-        let text: string = localStorage.getItem(fileName) || '';
+        let text: string = await localforage.getItem(fileName) || '';
         if (text && text.length) {
             console.log('%s context cached', fileName);
         } else {
             const url = FILE_PREFIX + fileName + '.js';
             text = await fetch(url).then(resp => resp.text());
+            console.log(fileName,text.length)
         }
-        localStorage.setItem(fileName, text);
+        await localforage.setItem(fileName, text);
+        localStorage.setItem(fileName,String(text.length));
         // console.log('saveFileContext.%s.done', fileName);
         return true;
     } catch (error) {
-        console.error('saveFileContext.%s.error',fileName, error);
+        // console.warn('error.code=',error?.code); // 22  QuotaExceededError
+        console.error('saveFileContext.error',fileName, error);
         return false;
     }
 }
@@ -33,7 +36,7 @@ export async function saveDictionary(fileList:string[]){
         const item:Record<string,string|number>=report[fileName];
         let dictionary=await localforage.getItem(key);
         if(!dictionary){
-            const source = localStorage.getItem(fileName) || '';
+            const source:string = await localforage.getItem(fileName) || '';
             dictionary = regexMatch(fileName, source,1);
             if(Object.keys(dictionary as object).length > 0){
                 await localforage.setItem(key, dictionary);
@@ -90,7 +93,7 @@ export async function saveHeros(fileList:string[],report:Record<string,any>={}){
         const item:Record<string,string|number>=report[fileName];
         let heros:any=await localforage.getItem(key);
         if(!heros){
-            const source = localStorage.getItem(fileName) || '';
+            const source:string = await localforage.getItem(fileName) || '';
             const dataMap = regexMatch(fileName, source, 2);
             heros=await resolveHeros(fileName,dataMap,dict);
             await localforage.setItem(key, heros);
@@ -141,7 +144,7 @@ export async function queryCards(where: string) {
 
 export async function simpleTest(){
     // const fileName='old';
-    // const text = localStorage.getItem(fileName) || '';
+    // const text = await localforage.getItem(fileName) || '';
     // const data = regexTest(text);
     // console.log('simpleTest',data);
     const keys=(await localforage.keys()).filter(name=>name.startsWith('heros'));

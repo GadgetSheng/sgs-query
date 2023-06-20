@@ -5,5 +5,9 @@ import UnoCSS from 'unocss/vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/sgs-query/',
+  server:{
+    host: true,
+    port: 5389
+  },
   plugins: [react(),UnoCSS()],
 })
