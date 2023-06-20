@@ -1,6 +1,6 @@
 import { FILE_PREFIX, GIT_FILE_LIST,PACKAGE_MAP } from "./config";
 import { localforage } from "./store";
-import { regexMatch, regexTest } from './helper';
+import { regexMatch } from './helper';
 import { Hero, Skill } from "./domain";
 
 const buildKey=(type:string,key:string)=>{
