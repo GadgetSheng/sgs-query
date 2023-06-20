@@ -1,46 +1,55 @@
 import { useCallback, useState } from 'react'
-import { initData, resetData, queryCards, initFile } from './utils/fetcher';
+import ReactJson from 'react-json-view';
+import { resetData } from './utils/store';
 import CardList from './components/CardList';
-import { FILE_PREFIX, GIT_FILE_LIST } from './utils/config';
+import { initAll,queryCards, simpleTest } from './utils/task';
 
 function App() {
   const [fetching, setFetching] = useState(false)
   const [data, setData] = useState({});
   const [heros, setHeros] = useState<any>(null);
   const [query, setQuery] = useState('');
-  const onInitFile = useCallback(async (fileName: string) => {
+  const onInitAll = useCallback(async () => {
     setFetching(true);
-    const result = await initFile(fileName);
+    const result = await initAll();
     setData(result);
     setFetching(false);
-  }, []);
+  },[])
+  const onTest= useCallback(async()=>{
+    const result=await simpleTest();
+    setData(result as any);
+  },[])
   const onClearAll = useCallback(() => {
     const confirm = window.confirm("确定要清空数据库吗？");
     if (confirm) resetData();
   }, [])
   const onQuery = useCallback(() => {
     if (!query) return;
-    if (query.length < 2) return;
+    if (query.length < 1) return;
     queryCards(query).then(results => {
       setHeros(results);
     });
   }, [query]);
   const onQueryChange = useCallback((e: any) => setQuery(e.target?.value), []);
-  const renderInitButtons = () => GIT_FILE_LIST.map((fileName: string, i: number) => (
-    <button key={i} onClick={() => onInitFile(fileName)}>init [{fileName}]</button>
-  ));
 
   return (
     <div className="w-screen h-screen">
       <h1>SGS-QUERY</h1>
-      {renderInitButtons()}
-      <hr />
+      <button onClick={()=>onTest()}>TEST</button>
+      <button onClick={onInitAll}>新初始化</button>
       <button onClick={onClearAll}>清空数据库</button>
       <div>
-        {fetching ? "fetching..." : JSON.stringify(data)}
+        {fetching ? "fetching..." : (
+        <ReactJson 
+          src={data} 
+          enableClipboard={false}
+          displayDataTypes={false}
+          theme="hopscotch"
+        />
+        )}
       </div>
       武将名称/拼音
-      <input type="text" value={query} onChange={onQueryChange} placeholder='至少两字符' />
+      <input type="text" value={query} onChange={onQueryChange} placeholder='至少一字符' />
       <button onClick={onQuery}>查询</button>
       <hr />
       <CardList heros={heros} />

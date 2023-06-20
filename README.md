@@ -49,3 +49,5 @@ translate优先缓存
 ### REFRERNCE
 
 https://useworker.js.org/docs/api-useworker
+
+https://www.npmjs.com/package/bifur
