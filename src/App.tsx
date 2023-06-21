@@ -39,11 +39,11 @@ function App() {
 
   return (
     <div className="w-screen h-screen">
-      <h1>SGS-QUERY</h1>
+      <h1 className="w-full bg-gray-100">SGS-QUERY</h1>
       <button className="ml-4" onClick={() => onTest()}>TEST</button>
       <button onClick={onInitAll}>新初始化</button>
       <button onClick={onClearAll}>清空数据库</button>
-      <div className="inline-block b-2 b-dashed b-#ccc h-8 v-base">
+      <div className="inline-block b-2 b-dashed b-#ccc h-8 v-mid">
         <label htmlFor="toggle" className="v-mid text-4">CDN:</label>
         <input 
           id="toggle"

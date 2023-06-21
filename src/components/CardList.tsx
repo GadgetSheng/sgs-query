@@ -1,6 +1,6 @@
 // import React from 'react';
 import { CDN_IMG_PREFIX, IMG_PREFIX } from '../utils/config';
-import { GenderMap, NationMap, Skill } from '../utils/domain';
+import { GenderMap, NationEnum, NationMap, Skill } from '../utils/domain';
 
 
 
@@ -24,8 +24,27 @@ function CardList(props: any) {
       const { from, gender, hp, key, name, nation, skills = [] } = hero;
 
       const heroUrl = (useCDN?CDN_IMG_PREFIX:IMG_PREFIX) + key + '.jpg';
+      const classList=["flex flex-row flex-1 bg-white box-border b-2 b-solid rd-2 px-3 py-1 mx-3 shadow-xl"];
+      switch(nation){
+        case NationEnum.wei:
+          classList.push('b-blue-400');
+          break;
+        case NationEnum.shu:
+          classList.push('b-red-400');
+          break;
+        case NationEnum.wu:
+          classList.push('b-green-400');
+          break;
+        case NationEnum.qun:
+          classList.push('b-yellow-400');
+          break;
+        case NationEnum.jin:
+            classList.push('b-purple-400');
+            break;
+        default: break;
+      }
       return (
-        <div key={i} className="flex flex-row flex-1 bg-white box-border b-2 b-solid b-#cc88 rd-2 px-3 py-1 mx-3 shadow-xl">
+        <div key={i} className={classList.join(' ')}>
           <div className="min-w-30 flex flex-col">
             <img 
               className="w-30 h-38 bg-cover shadow-md mt-5" 
