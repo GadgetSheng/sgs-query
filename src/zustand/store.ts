@@ -30,7 +30,7 @@ const useQueryStore = create<IState>((set, get) => {
     console.log('onChangeNation(%s)', nation);
     set((state: IState) => {
       const newForm = { ...state.form, nation }
-      return { form: newForm }
+      return { form: newForm, query: '' }
     });
     onSearch();
   };
@@ -38,7 +38,7 @@ const useQueryStore = create<IState>((set, get) => {
     console.log('onChangePinyin(%s)', pinyin);
     set((state: IState) => {
       const newForm = { ...state.form, pinyin }
-      return { form: newForm }
+      return { form: newForm,query:'' }
     });
     onSearch();
   };
@@ -48,7 +48,7 @@ const useQueryStore = create<IState>((set, get) => {
     const { packages = [] } = form;
     const newPackages = packages.includes(pack) ? packages.filter((p: string) => p !== pack) : [...packages, pack];
     const newForm = { ...form, packages: newPackages };
-    set(() => ({ form: newForm }));
+    set(() => ({ form: newForm, query: '' }));
     onSearch();
   }
 

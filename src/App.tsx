@@ -34,31 +34,38 @@ function App() {
   return (
     <div className="w-screen h-screen">
       <h1>SGS-QUERY</h1>
-      <button onClick={() => onTest()}>TEST</button>
+      <button className="ml-4" onClick={() => onTest()}>TEST</button>
       <button onClick={onInitAll}>新初始化</button>
       <button onClick={onClearAll}>清空数据库</button>
-      <div>
+      <div className="px-4">
         {fetching ? "fetching..." : (
           <ReactJson
+            style={{margin:4}}
             src={data}
             enableClipboard={false}
             displayDataTypes={false}
-            theme="hopscotch"
+            theme="mocha"
           />
         )}
       </div>
-      武将名称/拼音
-      <input
-        type="text"
-        className="h-9 w-50"
-        value={query}
-        onChange={(e) => updateQuery(e.currentTarget.value)}
-        placeholder='至少一字符'
-      />
-      <button onClick={onSearch}>查询</button>
-      <button onClick={onResetQuery}>x</button>
+      <div className="xQuery1 px-4">
+        <span>武将名/拼音</span>
+        <input
+          type="text"
+          className="relative h-8 w-50 mx-2"
+          value={query}
+          onChange={(e) => updateQuery(e.currentTarget.value)}
+          placeholder='按<名字/拼音>模糊搜索'
+        >
+        </input>
+        <div 
+          className="inline-block v-mid i-carbon-close-filled mx-3"
+          onClick={onResetQuery}
+        />
+        <button onClick={onSearch}>查询</button>
+      </div>
       <QueryForm />
-      <hr />
+      <hr className="mx-4"/>
       <CardList heros={cardList} />
     </div>
   )

@@ -150,7 +150,7 @@ export async function queryCardsByForm(form: Record<string, string>) {
   const filterByForm = (hero: Hero) => {
     const match1 = nation && hero.nation === nation;
     const match2 = pinyin && (hero.pinyin || '').startsWith(pinyin);
-    console.log('filterByForm %s===%s,%s===%s => %b', hero.nation, nation, hero.pinyin, pinyin);
+    // console.log('filterByForm %s===%s,%s===%s => %b', hero.nation, nation, hero.pinyin, pinyin);
     if (nation && pinyin) return match1 && match2;
     if (nation && !pinyin) return match1;
     if (pinyin && !nation) return match2;
