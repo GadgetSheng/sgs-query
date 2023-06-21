@@ -14,7 +14,13 @@ function App() {
     updateQuery: store.updateQuery
   }));
   const [fetching, setFetching] = useState(false)
+  const [checked,setChecked]=useState(false);
   const [data, setData] = useState({});
+  const onToggle = useCallback(() => {
+    const useCDN=!checked;
+    localStorage.setItem('useCDN',Number(useCDN).toString());
+    setChecked(useCDN);
+  },[checked]);
   const onInitAll = useCallback(async () => {
     setFetching(true);
     const result = await initAll();
@@ -37,6 +43,16 @@ function App() {
       <button className="ml-4" onClick={() => onTest()}>TEST</button>
       <button onClick={onInitAll}>新初始化</button>
       <button onClick={onClearAll}>清空数据库</button>
+      <div className="inline-block b-2 b-dashed b-#ccc h-8 v-base">
+        <label htmlFor="toggle" className="v-mid text-4">CDN:</label>
+        <input 
+          id="toggle"
+          type="checkbox"
+          className="w-6 h-6 bg-green-100"
+          onChange={onToggle}
+          checked={checked}
+        ></input>
+      </div>
       <div className="px-4">
         {fetching ? "fetching..." : (
           <ReactJson

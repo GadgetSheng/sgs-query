@@ -1,4 +1,4 @@
-import { FILE_PREFIX, GIT_FILE_LIST, PACKAGE_MAP } from "./config";
+import { CDN_FILE_PREFIX, FILE_PREFIX, GIT_FILE_LIST, PACKAGE_MAP } from "./config";
 import { localforage } from "./store";
 import { regexMatch } from './helper';
 import { Hero, Skill } from "./domain";
@@ -13,7 +13,8 @@ export async function saveFileContext(fileName: string) {
     if (text && text.length) {
       console.log('%s context cached', fileName);
     } else {
-      const url = FILE_PREFIX + fileName + '.js';
+      const useCDN=localStorage.getItem('useCDN') === '1';
+      const url = (useCDN?CDN_FILE_PREFIX:FILE_PREFIX) + fileName + '.js';
       text = await fetch(url).then(resp => resp.text());
       console.log(fileName, text.length)
     }

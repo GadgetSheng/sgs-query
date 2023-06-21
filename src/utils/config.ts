@@ -14,9 +14,15 @@ export const GIT_FILE_LIST: string[] = [
 ];
 
 export const FILE_PREFIX = 'https://raw.githubusercontent.com/RainEggplant/noname/pwa/character/';
+export const CDN_FILE_PREFIX = 'https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/character/';
+// https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/character/old.js
 
 // https://raineggplant.github.io/noname/image/character/re_zhoucang.jpg
 export const IMG_PREFIX = 'https://raineggplant.github.io/noname/image/character/';
+export const CDN_IMG_PREFIX= 'https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/image/character/'
+// https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/image/character/re_zhoucang.jpg
+
+
 
 export const PACKAGE_MAP: Record<string, string> = {
   'shenhua': '神话再临', // 
@@ -29,3 +35,7 @@ export const PACKAGE_MAP: Record<string, string> = {
   'yingbian': '应变', // 应变
   'refresh': '新重制', // 重置
 }
+
+
+// Root endpoint is always https://cdn.jsdelivr.net
+// jsdelivr RULES= https://cdn.jsdelivr.net/gh/user/repo@version/file

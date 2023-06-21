@@ -1,5 +1,5 @@
 // import React from 'react';
-import { IMG_PREFIX } from '../utils/config';
+import { CDN_IMG_PREFIX, IMG_PREFIX } from '../utils/config';
 import { GenderMap, NationMap, Skill } from '../utils/domain';
 
 
@@ -18,12 +18,14 @@ function CardList(props: any) {
       )
     })
   };
+  const useCDN=localStorage.getItem('useCDN') === '1';
   const renderHeros = () => {
     return heros.map((hero: any, i: number) => {
       const { from, gender, hp, key, name, nation, skills = [] } = hero;
-      const heroUrl = IMG_PREFIX + key + '.jpg';
+
+      const heroUrl = (useCDN?CDN_IMG_PREFIX:IMG_PREFIX) + key + '.jpg';
       return (
-        <div key={i} className="flex flex-row flex-1 b-2 b-solid b-#ccc rd-2 px-3 py-1 mx-3 shadow-xl">
+        <div key={i} className="flex flex-row flex-1 bg-white box-border b-2 b-solid b-#cc88 rd-2 px-3 py-1 mx-3 shadow-xl">
           <div className="min-w-30 flex flex-col">
             <img 
               className="w-30 h-38 bg-cover shadow-md mt-5" 
@@ -31,7 +33,7 @@ function CardList(props: any) {
             ></img>
             {key}
           </div>
-          <div className="bg-white text-3 p-3">
+          <div className="text-3 p-3">
             <div className="fw-bold flex justify-between">
               <span className="text-14px">{name}</span>
               <i>[{from}]</i>
