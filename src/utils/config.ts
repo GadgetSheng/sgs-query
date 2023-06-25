@@ -11,6 +11,7 @@ export const GIT_FILE_LIST: string[] = [
   'yijiang', // 一将成名
   'refresh', // 重置
   'yingbian', // 应变
+  'clan',
 ];
 
 export const FILE_PREFIX = 'https://raw.githubusercontent.com/RainEggplant/noname/pwa/character/';
@@ -33,7 +34,9 @@ export const PACKAGE_MAP: Record<string, string> = {
   'xinghuoliaoyuan': '星火燎原', // 星火燎原
   'yijiang': '一将成名', // 一将成名
   'yingbian': '应变', // 应变
-  'refresh': '新重制', // 重置
+  'refresh': '界限突破', // 重置
+  'clan': '名门士族',
+  // 'mobile': '手杀' // ERROR: 存在 qiaosi_c1:'<imgsrc="'+lib.assetURL+'image/card/qiaosi_card1.png"width="60"height="60">'
 }
 
 

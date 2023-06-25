@@ -77,10 +77,10 @@ async function resolveHeros(fileName: string, dataMap: any, dict: Record<string,
       let name = dict[skillName];
       if (!name) {
         name = skillName;
-        console.warn('> cannot translate [name]: %s', skillName);
+        // console.warn('> cannot translate [name]: %s', skillName);
       }
       const desc = dict[`${skillName}_info`];
-      if (!desc) console.warn('> cannot translate [desc]: %s', skillName);
+      // if (!desc) console.warn('> cannot translate [desc]: %s', skillName);
       return { key: skillName, name, desc } as Skill;
     });
     characters.push(hero);

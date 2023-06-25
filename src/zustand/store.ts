@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { Hero } from '../utils/domain';
 import { queryCards, queryCardsByForm } from '../utils/task';
-import { PACKAGE_MAP } from '../utils/config';
+// import { PACKAGE_MAP } from '../utils/config';
 
 interface IState {
   form: Record<string, any>
@@ -53,7 +53,10 @@ const useQueryStore = create<IState>((set, get) => {
   }
 
   return {
-    form: { packages: Object.keys(PACKAGE_MAP) },
+    // form: { packages: Object.keys(PACKAGE_MAP) },
+    form: { 
+      packages: [ 'sp', 'sp2', 'xinghuoliaoyuan', 'yijiang', 'yingbian', 'refresh', ] 
+    }, 
     cardList: [],
     query: '',
     updateQuery: (value: string) => set(() => ({ query: value })),

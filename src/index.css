@@ -11,6 +11,20 @@
   -webkit-text-size-adjust: 100%;
 }
 
+/* constant(safe-area-inset-bottom) */
+@supports (padding-top: constant(safe-area-inset-top)) {
+  .xRoot {
+    padding-top: constant(safe-area-inset-top);
+    padding-bottom: constant(safe-area-inset-bottom);
+  }
+}
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .xRoot {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 ul,
 li {
   list-style: none;

@@ -38,7 +38,7 @@ function App() {
   const onResetQuery = () => updateQuery('');
 
   return (
-    <div className="h-screen w-screen">
+    <div className="xRoot h-screen w-screen">
       <h1 className="w-full bg-gray-100">SGS-QUERY</h1>
       <button className="ml-4" onClick={() => onTest()}>TEST</button>
       <button onClick={onInitAll}>新初始化</button>
@@ -54,7 +54,7 @@ function App() {
         ></input>
       </div>
       <div className="px-4">
-        {fetching ? "fetching..." : (
+        {fetching ? "加载中..." : (
           <ReactJson
             style={{margin:4}}
             src={data}
