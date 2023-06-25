@@ -4,11 +4,14 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
+    '@unocss'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   plugins: ['react-refresh'],
   rules: {
+    // '@unocss/order': 0, // Enforce a specific order for class selectors.
+    // '@unocss/order-attributify // Enforce a specific order for attributify selectors.
     'react-refresh/only-export-components': 'warn',
     '@typescript-eslint/no-explicit-any': 0
   },

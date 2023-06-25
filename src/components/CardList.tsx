@@ -12,7 +12,7 @@ function CardList(props: any) {
     return skills.map((skill: Skill, i) => {
       const { key: skillKey, name, desc } = skill;
       return (
-        <li key={i} className="bg-[wheat] c-#333 mt-2" title={skillKey}>
+        <li key={i} className="mt-2 bg-[wheat] c-#333" title={skillKey}>
           {name} : {desc}
         </li>
       )
@@ -47,13 +47,13 @@ function CardList(props: any) {
         <div key={i} className={classList.join(' ')}>
           <div className="min-w-30 flex flex-col">
             <img 
-              className="w-30 h-38 bg-cover shadow-md mt-5" 
+              className="mt-5 h-38 w-30 bg-cover shadow-md" 
               src={heroUrl} alt={key}
             ></img>
             {key}
           </div>
-          <div className="text-3 p-3">
-            <div className="fw-bold flex justify-between">
+          <div className="p-3 text-3">
+            <div className="flex justify-between fw-bold">
               <span className="text-14px">{name}</span>
               <i>[{from}]</i>
             </div>
@@ -67,7 +67,7 @@ function CardList(props: any) {
     });
   }
   return (
-    <div className="w-full h-full flex flex-col max-w-160 gap-4">
+    <div className="h-full max-w-160 w-full flex flex-col gap-4">
       <h2>总数：{heros.length}</h2>
       {renderHeros()}
     </div>

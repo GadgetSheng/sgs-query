@@ -38,7 +38,7 @@ function QueryForm() {
   }));
   const { nation = '', pinyin = '', packages = [] } = form;
   return (
-    <div className="bg-#AAA3 mx-4 p-4">
+    <div className="mx-4 bg-#AAA3 p-4">
       <div className="flex flex-wrap gap-4">
         {PackageOptions.map((name: string, i: number) => (
           <CheckboxButton
@@ -61,7 +61,7 @@ function QueryForm() {
           />
         ))}
       </div>
-      <div className="flex flex-wrap gap-4 mt-4">
+      <div className="mt-4 flex flex-wrap gap-4">
         字母:
         {LetterOptions.map((letter: string, i: number) => (
           <RadioButton
