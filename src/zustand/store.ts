@@ -1,13 +1,18 @@
 import { create } from 'zustand';
 import { Hero } from '../utils/domain';
 import { queryCards, queryCardsByForm } from '../utils/task';
-// import { PACKAGE_MAP } from '../utils/config';
+
+const DEFAULT_FORM={
+  query: '',
+  packages: [ 'sp', 'sp2', 'xinghuoliaoyuan', 'yijiang', 'yingbian', 'refresh', ] 
+};
 
 interface IState {
   form: Record<string, any>
   cardList: Array<Hero>
   query: string
   updateQuery: (value: string) => void
+  resetForm: ()=>void
   onSearch: () => void
   onChangeNation: (nation: string) => void
   onChangePinyin: (pinyin: string) => void
@@ -53,18 +58,16 @@ const useQueryStore = create<IState>((set, get) => {
   }
 
   return {
-    // form: { packages: Object.keys(PACKAGE_MAP) },
-    form: { 
-      packages: [ 'sp', 'sp2', 'xinghuoliaoyuan', 'yijiang', 'yingbian', 'refresh', ] 
-    }, 
+    form: DEFAULT_FORM, 
     cardList: [],
     query: '',
     updateQuery: (value: string) => set(() => ({ query: value })),
+    resetForm: ()=> set(()=>({query: '', form:DEFAULT_FORM, cardList:[]})),
     onSearch,
     onChangeNation,
     onChangePinyin,
     togglePackage
-  }
+  };
 })
 
 export {

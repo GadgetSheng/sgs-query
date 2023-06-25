@@ -2,20 +2,22 @@ import { useCallback, useState } from 'react'
 import ReactJson from 'react-json-view';
 import { resetData } from './utils/store';
 import CardList from './components/CardList';
-import { initAll, simpleTest } from './utils/task';
+import { initAll, simpleTest, queryBySkill } from './utils/task';
 import QueryForm from './components/QueryForm';
 import { useQueryStore } from './zustand/store';
 
 function App() {
-  const { query, cardList, updateQuery, onSearch } = useQueryStore(store => ({
+  const { query, cardList, updateQuery,resetForm, onSearch } = useQueryStore(store => ({
     cardList: store.cardList,
     query: store.query,
     onSearch: store.onSearch,
-    updateQuery: store.updateQuery
+    updateQuery: store.updateQuery,
+    resetForm: store.resetForm
   }));
   const [fetching, setFetching] = useState(false)
   const [checked,setChecked]=useState(false);
   const [data, setData] = useState({});
+  const [skill, setSkill] = useState('');
   const onToggle = useCallback(() => {
     const useCDN=!checked;
     localStorage.setItem('useCDN',Number(useCDN).toString());
@@ -31,11 +33,19 @@ function App() {
     const result = await simpleTest();
     setData(result as any);
   }, [])
+  const onSearchSkill=useCallback(async ()=>{
+    const result=await queryBySkill(skill);
+    setData(result as any);
+  },[skill]);
   const onClearAll = useCallback(() => {
     const confirm = window.confirm("确定要清空数据库吗？");
     if (confirm) resetData();
   }, [])
-  const onResetQuery = () => updateQuery('');
+  const onReset=()=>{
+    resetForm();
+    setSkill('');
+    setData({});
+  };
 
   return (
     <div className="xRoot h-screen w-screen">
@@ -65,21 +75,36 @@ function App() {
         )}
       </div>
       <div className="xQuery1 px-4">
-        <span>武将名/拼音</span>
+        <span>按技能检索</span>
         <input
           type="text"
           className="relative mx-2 h-8 w-50"
+          autoCapitalize="none"
+          value={skill}
+          onChange={(e) => setSkill(e.currentTarget.value)}
+          placeholder='拼音起始模糊/中文精确搜索'
+        >
+        </input>
+        <button onClick={onSearchSkill}>查询</button>
+      </div>
+      <div className="xQuery1 px-4">
+        <span>武将名检索</span>
+        <input
+          type="text"
+          className="relative mx-2 h-8 w-50"
+          autoCapitalize="none"
           value={query}
           onChange={(e) => updateQuery(e.currentTarget.value)}
-          placeholder='按<名字/拼音>模糊搜索'
+          placeholder='拼音/中文模糊搜索'
         >
         </input>
         <div 
           className="i-carbon-close-filled mx-3 inline-block v-mid"
-          onClick={onResetQuery}
+          onClick={onReset}
         />
         <button onClick={onSearch}>查询</button>
       </div>
+      
       <QueryForm />
       <hr className="mx-4"/>
       <CardList heros={cardList} />

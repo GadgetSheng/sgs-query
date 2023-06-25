@@ -182,3 +182,24 @@ export async function simpleTest() {
   }
   return report;
 }
+
+export async function queryBySkill(where:string){
+  if(!where || where.length<2) return [];
+  const query=where.toLowerCase().trim();
+  const skills:Record<string,string>[]=[];
+  for (const fileName of GIT_FILE_LIST) {
+    const storageKey = buildKey('dict', fileName);
+    const dicts: Record<string,string> = await localforage.getItem(storageKey) || {};
+    for(const [key,value] of Object.entries(dicts)){
+      if(key.endsWith('_info') && key.startsWith(query)) {
+        skills.push({name: dicts[key.replace('_info','')], desc: value});
+        // break;
+      }
+      if(!key.endsWith('_info') && value===query){
+        skills.push({ name: value, desc: dicts[`${key}_info`] });
+        // break;
+      }
+    }
+  }
+  return skills;
+}
