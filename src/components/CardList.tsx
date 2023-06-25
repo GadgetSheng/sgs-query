@@ -10,7 +10,7 @@ function CardList(props: any) {
     return skills.map((skill: Skill, i) => {
       const { key: skillKey, name, desc } = skill;
       return (
-        <li key={i} className="mt-2 rd-2 bg-[wheat] p-1 lh-normal c-#333" title={skillKey}>
+        <li key={i} className="mt-2 rd-r-2 bg-[wheat] p-1 lh-normal c-#333" title={skillKey}>
           <span className="b-1 b-#666 rd-r-full b-solid bg-gray-200 px-1 fw-bold">{name}</span>
           &nbsp;
           <span>{desc}</span>

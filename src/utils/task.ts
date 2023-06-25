@@ -185,19 +185,28 @@ export async function simpleTest() {
 
 export async function queryBySkill(where:string){
   if(!where || where.length<2) return [];
-  const query=where.toLowerCase().trim();
+  const query=where.toLowerCase().replaceAll(/\s/g,'');
   const skills:Record<string,string>[]=[];
   for (const fileName of GIT_FILE_LIST) {
+    const from=PACKAGE_MAP[fileName];
     const storageKey = buildKey('dict', fileName);
     const dicts: Record<string,string> = await localforage.getItem(storageKey) || {};
     for(const [key,value] of Object.entries(dicts)){
+      const id=`${from}<${key}>`;
       if(key.endsWith('_info') && key.startsWith(query)) {
-        skills.push({name: dicts[key.replace('_info','')], desc: value});
-        // break;
+        skills.push({
+          name: dicts[key.replace('_info','')], 
+          desc: value,
+          id,
+          
+        });
       }
       if(!key.endsWith('_info') && value===query){
-        skills.push({ name: value, desc: dicts[`${key}_info`] });
-        // break;
+        skills.push({ 
+          name: value, 
+          desc: dicts[`${key}_info`],
+          id,
+        });
       }
     }
   }
