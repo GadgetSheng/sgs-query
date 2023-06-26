@@ -1,9 +1,32 @@
-// import React from 'react';
+import React from 'react';
 import { IMG_PREFIX_MAP } from '../utils/config';
 import { GenderMap, NationEnum, NationMap, Skill } from '../utils/domain';
 
+
+const Filled=React.memo(()=>( <i className="i-carbon-favorite-filled inline-block v-mid c-#999"></i> ));
+const Empty=React.memo(()=>( <i className="i-carbon-favorite inline-block v-mid c-#999"></i> ));
+
+function Magatama(props:any){
+  const {hp=''}=props;
+  const [have,full]=String(hp).split('/');
+  const current=Number(have);
+  const total=Number(full);
+  if(isNaN(current)) return <>{hp}</>;
+  if(isNaN(total)){
+    if(current<=6){
+      return (<> {Array.from({length:current}).map((_,i)=>(<Filled key={i}/>))} </>);
+    }
+    return <><Filled/>x {current}</>
+  }
+  return (<>
+    {Array.from({length:current}).map((_,i)=>(<Filled key={i}/>))}
+    {Array.from({length:(total-current)}).map((_,i)=>(<Empty key={i}/>))}
+  </>)
+}
+
+
 function CardList(props: any) {
-  const { heros } = props;
+  const { heros, setSkill, setName } = props;
   if (!heros || !heros.length) return <div className="mx-4">EMPTY</div>;
   const renderSkills = (skills: any[]) => {
     if (!skills.length) return null;
@@ -11,7 +34,10 @@ function CardList(props: any) {
       const { key: skillKey, name, desc } = skill;
       return (
         <li key={i} className="mt-2 rd-r-2 bg-[wheat] p-1 lh-normal c-#333" title={skillKey}>
-          <span className="b-1 b-#666 rd-r-full b-solid bg-gray-200 px-1 fw-bold">{name}</span>
+          <span 
+            className="b-1 b-#666 rd-r-full b-solid bg-gray-200 px-1 fw-bold"
+            onClick={()=>setSkill(name)}
+          >{name}</span>
           &nbsp;
           <span>{desc}</span>
         </li>
@@ -54,10 +80,12 @@ function CardList(props: any) {
           </div>
           <div className="p-3 text-3">
             <div className="flex justify-between fw-bold">
-              <span className="text-14px">{name || pinyin}</span>
+              <span className="text-14px" onClick={()=>setName(name)}>{name || pinyin}</span>
               <i>[{from}]</i>
             </div>
-            <div>{GenderMap[gender]} <b>{hp}</b> {NationMap[nation]}</div>
+            <div>
+              {GenderMap[gender]} <Magatama hp={hp} /> {hp} {NationMap[nation]}
+            </div>
             <ul className="xSkills">
               {renderSkills(skills)}
             </ul>

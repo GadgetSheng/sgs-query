@@ -107,7 +107,11 @@ function App() {
       
       <QueryForm />
       <hr className="mx-4"/>
-      <CardList heros={cardList} />
+      <CardList 
+        heros={cardList} 
+        setSkill={setSkill}
+        setName={updateQuery}
+      />
     </div>
   )
 }

@@ -131,14 +131,15 @@ export async function initAll() {
 
 export async function queryCards(where: string) {
   const result: any = [];
+  const query=where.toLowerCase().replaceAll(/\s/g,'');
   for (const fileName of GIT_FILE_LIST) {
     const key = buildKey('heros', fileName);
     // console.log(fileName, where);
     const heros: any = await localforage.getItem(key);
     if (heros && heros.length) {
       const hero = heros.find((hero: any) => {
-        return hero.key.indexOf(where) >= 0
-          || (hero.name && hero.name.indexOf(where) >= 0)
+        return hero.key.indexOf(query) >= 0
+          || (hero.name && hero.name.indexOf(query) >= 0)
       });
       if (hero) {
         const data = { from: fileName, ...hero };
