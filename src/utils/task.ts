@@ -1,4 +1,8 @@
-import { CDN_FILE_PREFIX, FILE_PREFIX, GIT_FILE_LIST, PACKAGE_MAP } from "./config";
+import { 
+  FILE_PREFIX_MAP,
+  GIT_FILE_LIST, 
+  PACKAGE_MAP
+} from "./config";
 import { localforage } from "./store";
 import { regexMatch } from './helper';
 import { Hero, Skill } from "./domain";
@@ -13,8 +17,9 @@ export async function saveFileContext(fileName: string) {
     if (text && text.length) {
       console.log('%s context cached', fileName);
     } else {
-      const useCDN=localStorage.getItem('useCDN') === '1';
-      const url = (useCDN?CDN_FILE_PREFIX:FILE_PREFIX) + 'character/' + fileName + '.js';
+      const useCDN=localStorage.getItem('useCDN') || '';
+      const prefix=FILE_PREFIX_MAP[useCDN] || FILE_PREFIX_MAP.default;
+      const url = prefix + 'character/' + fileName + '.js';
       text = await fetch(url).then(resp => resp.text());
       console.log(fileName, text.length)
     }
@@ -169,8 +174,9 @@ export async function queryCardsByForm(form: Record<string, string>) {
 }
 
 async function fetchChangeLog(){
-  const useCDN=localStorage.getItem('useCDN') === '1';
-  const url = (useCDN?CDN_FILE_PREFIX:FILE_PREFIX)+'game/update.js';
+  const useCDN=localStorage.getItem('useCDN') ?? '';
+  const prefix=FILE_PREFIX_MAP[useCDN] || FILE_PREFIX_MAP.default;
+  const url = prefix+'game/update.js';
   const origin = await fetch(url).then(resp => resp.text());
   // console.log('fetch.[game/update]',origin);
   const text=origin.replaceAll(/\/\/.*$/gm, '').replaceAll(/\s/g, '');

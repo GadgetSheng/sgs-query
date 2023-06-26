@@ -13,15 +13,28 @@ export const GIT_FILE_LIST: string[] = [
   // 'clan',
 ];
 
-export const FILE_PREFIX = 'https://raw.githubusercontent.com/RainEggplant/noname/pwa/';
-export const CDN_FILE_PREFIX = 'https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/';
+const FILE_PREFIX = 'https://raw.githubusercontent.com/RainEggplant/noname/pwa/';
+const CDN_FILE_PREFIX = 'https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/';
+const ESM_FILE_PREFIX = 'https://esm.sh/v126/gh/RainEggplant/noname@pwa/es2022/';
 // https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/character/old.js
 
+export const FILE_PREFIX_MAP:Record<string,string>={
+  default: FILE_PREFIX,
+  '1': CDN_FILE_PREFIX,
+  '2': ESM_FILE_PREFIX,
+}
+
 // https://raineggplant.github.io/noname/image/character/re_zhoucang.jpg
-export const IMG_PREFIX = 'https://raineggplant.github.io/noname/image/character/';
-export const CDN_IMG_PREFIX= 'https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/image/character/'
+const IMG_PREFIX = 'https://raineggplant.github.io/noname/image/character/';
+const CDN_IMG_PREFIX= 'https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/image/character/';
+const ESM_IMG_PREFIX= 'https://esm.sh/gh/RainEggplant/noname@pwa/image/character/';
 // https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/image/character/re_zhoucang.jpg
 
+export const IMG_PREFIX_MAP:Record<string,string> = {
+  default: IMG_PREFIX,
+  '1': CDN_IMG_PREFIX,
+  '2': ESM_IMG_PREFIX,
+}
 
 
 export const PACKAGE_MAP: Record<string, string> = {

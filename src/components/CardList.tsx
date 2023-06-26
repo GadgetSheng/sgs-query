@@ -1,5 +1,5 @@
 // import React from 'react';
-import { CDN_IMG_PREFIX, IMG_PREFIX } from '../utils/config';
+import { IMG_PREFIX_MAP } from '../utils/config';
 import { GenderMap, NationEnum, NationMap, Skill } from '../utils/domain';
 
 function CardList(props: any) {
@@ -18,12 +18,12 @@ function CardList(props: any) {
       )
     })
   };
-  const useCDN=localStorage.getItem('useCDN') === '1';
+  const useCDN=localStorage.getItem('useCDN') ?? '';
   const renderHeros = () => {
     return heros.map((hero: any, i: number) => {
       const { from, gender, hp, key, name, pinyin, nation, skills = [] } = hero;
-
-      const heroUrl = (useCDN?CDN_IMG_PREFIX:IMG_PREFIX) + key + '.jpg';
+      const prefix=IMG_PREFIX_MAP[useCDN] || IMG_PREFIX_MAP.default;
+      const heroUrl = prefix + key + '.jpg';
       let bColor="";
       switch(nation){
         case NationEnum.wei:
