@@ -14,7 +14,7 @@ export async function saveFileContext(fileName: string) {
       console.log('%s context cached', fileName);
     } else {
       const useCDN=localStorage.getItem('useCDN') === '1';
-      const url = (useCDN?CDN_FILE_PREFIX:FILE_PREFIX) + fileName + '.js';
+      const url = (useCDN?CDN_FILE_PREFIX:FILE_PREFIX) + 'character/' + fileName + '.js';
       text = await fetch(url).then(resp => resp.text());
       console.log(fileName, text.length)
     }
@@ -168,17 +168,33 @@ export async function queryCardsByForm(form: Record<string, string>) {
   return result;
 }
 
+async function fetchChangeLog(){
+  const useCDN=localStorage.getItem('useCDN') === '1';
+  const url = (useCDN?CDN_FILE_PREFIX:FILE_PREFIX)+'game/update.js';
+  const origin = await fetch(url).then(resp => resp.text());
+  // console.log('fetch.[game/update]',origin);
+  const text=origin.replaceAll(/\/\/.*$/gm, '').replaceAll(/\s/g, '');
+  const match=/changeLog:\[(.*?)\]/g.exec(text)
+  if(match && match[1]){
+    return  match[1];
+  }
+  return "";
+}
+
 
 export async function simpleTest() {
-  // const fileName='old';
-  // const text = await localforage.getItem(fileName) || '';
-  // const data = regexTest(text);
-  // console.log('simpleTest',data);
   const keys = (await localforage.keys()).filter(name => name.startsWith('heros'));
   const report: Record<string, any> = {};
   for (const key of keys) {
     const heros = await localforage.getItem(key);
     report[key] = (heros as Array<Hero>).length;
+  }
+  try {
+    const changeLog=await fetchChangeLog();
+    const logs=changeLog.replaceAll(/['"]/g,'').split(',').filter(Boolean);
+    report['[NoName]更新']=logs;
+  } catch (error) {
+    console.warn('fetchChangeLog',error)    ;
   }
   return report;
 }

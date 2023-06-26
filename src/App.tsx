@@ -50,7 +50,7 @@ function App() {
   return (
     <div className="xRoot h-screen w-screen">
       <h1 className="w-full bg-gray-100">SGS-QUERY</h1>
-      <button className="ml-4" onClick={() => onTest()}>TEST</button>
+      <button className="ml-4" onClick={() => onTest()}>INFO</button>
       <button onClick={onInitAll}>新初始化</button>
       <button onClick={onClearAll}>清空数据库</button>
       <div className="inline-block h-8 b-2 b-#ccc b-dashed v-mid">

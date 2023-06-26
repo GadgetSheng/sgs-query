@@ -13,8 +13,8 @@ export const GIT_FILE_LIST: string[] = [
   // 'clan',
 ];
 
-export const FILE_PREFIX = 'https://raw.githubusercontent.com/RainEggplant/noname/pwa/character/';
-export const CDN_FILE_PREFIX = 'https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/character/';
+export const FILE_PREFIX = 'https://raw.githubusercontent.com/RainEggplant/noname/pwa/';
+export const CDN_FILE_PREFIX = 'https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/';
 // https://cdn.jsdelivr.net/gh/RainEggplant/noname@pwa/character/old.js
 
 // https://raineggplant.github.io/noname/image/character/re_zhoucang.jpg
